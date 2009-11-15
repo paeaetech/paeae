@@ -8,7 +8,9 @@
 #define ST_CP 6
 #define HTC_OUT 5
 
-#define HTC_NUM_CASCADES 4
+#ifndef HTC_NUM_CASCADES
+#define HTC_NUM_CASCADES 1
+#endif
 
 class HTC595
 {

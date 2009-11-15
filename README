@@ -5,8 +5,8 @@ if not specified otherwise.
 
 Current projects:
 
-htc595: small library for using x595 serial-in-parallel-out chips
-ds2482: library for controlling DS2482-100 and DS2482-800 1-wire masters.
+Libraries/HTC595: small library for using x595 serial-in-parallel-out chips
+Libraries/ds2482: library for controlling DS2482-100 and DS2482-800 1-wire masters.
 
 
 

@@ -1,0 +1,28 @@
+
+htc595: small library for using 595 serial-in-parallel-out chips
+
+If you have chained more than one 595, you need to define HTC_NUM_CASCADES before including htc595.h:
+
+#define HTC_NUM_CASCADES 4
+#include <htc595.h>
+
+Constructor takes three parameters, pins for data,sh_cp and st_cp. Defaults are 5,7,6 respectively.
+
+
+
+usage:
+
+
+#define HTC_NUM_CASCADES 4 //four 595s chained
+#include <htc595.h>
+
+
+HTC595 htc(5,7,6); //using pin 5 for data,7 for sh_cp and 6 for st_cp
+
+
+void loop()
+{
+	uint8_t data[4] = { 1,1,1,1 };  //buffer size has to be atleast equal HTC_NUM_CASCADES
+	htc.update(data);
+	
+}
