@@ -1,9 +1,4 @@
 
-extern "C"
-{
-#include "femtoos_code.h"
-}
-
 #include <WProgram.h>
 #include "htc595.h"
 
@@ -27,7 +22,6 @@ HTC595::HTC595(uint8_t outpin,uint8_t sh_cp,uint8_t st_cp)
 
 void HTC595::update(uint8_t* data)
 {
-	taskEnterSwitchCritical();
 	for (int i=HTC_NUM_CASCADES-1;i>=0;i--)
 	{
 		uint8_t b = data[i];
@@ -41,7 +35,6 @@ void HTC595::update(uint8_t* data)
 	}
 	pulseStcp();
 	
-	taskExitSwitchCritical();
 }
 
 
