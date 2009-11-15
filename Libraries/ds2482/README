@@ -1,19 +1,4 @@
 
-
-This is a GPLd code produced by Paeae Technologies. Usually the code is suitable for Arduino platforms
-if not specified otherwise.
-
-Current projects:
-
-htc595: small library for using x595 serial-in-parallel-out chips
-ds2482: library for controlling DS2482-100 and DS2482-800 1-wire masters.
-
-
-
-
------------
-DS2482:
-
 Arduino library for controlling DS2482-100 and DS2482-800 1-wire masters.
 
 Uses Wire library to communicate with DS2482 so be sure to call Wire.begin() before using the library.
