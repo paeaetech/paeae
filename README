@@ -9,6 +9,9 @@ Libraries/HTC595: small library for using x595 serial-in-parallel-out chips
 Libraries/ds2482: library for controlling DS2482-100 and DS2482-800 1-wire masters.
 
 
+Projects/altpromo: code and schematics for altparty promotion gadget
+
+
 -----------
 HTC595:
 
