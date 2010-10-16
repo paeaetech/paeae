@@ -1,0 +1,19 @@
+Example code for 595 matrix kit.
+================================
+
+Example code uses SPI to transfer data to the matrix. The matrix needs to be connected to the SPI pins of Arduino.
+
+Connections for SPI 
+===================
+
+ * 5V  - 5V
+ * GND - GND
+ * SER - pin 11
+ * SCK - pin 13
+ * RCK - pin 10
+
+
+EXAMPLES
+========
+
+**example1** - Emulates PWM by using timer to refresh the display. This allows us to have different shades of colour.
