@@ -17,3 +17,4 @@ EXAMPLES
 ========
 
 **example1** - Emulates PWM by using timer to refresh the display. This allows us to have different shades of colour.
+**example2** - Modified version of example1 which supports multiple panels chained together.
