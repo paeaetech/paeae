@@ -16,11 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	crc code is from OneWire library
-
-
-Updates:
-	dec 5th, 2009: included a search function fix by Don T
-	see http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1242137666
+	
 */
 #include "WConstants.h"
 
@@ -230,8 +226,7 @@ void DS2482::wireSelect(uint8_t rom[8])
 void DS2482::wireResetSearch()
 {
 	searchExhausted = 0;
-	// Initialize to negative value
-	searchLastDisrepancy = -1;
+	searchLastDisrepancy = 0;
 	
 	for(uint8_t i = 0; i<8; i++) 
 		searchAddress[i] = 0;

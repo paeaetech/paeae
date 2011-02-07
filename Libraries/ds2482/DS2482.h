@@ -103,7 +103,7 @@ private:
 	
 #if ONEWIRE_SEARCH
 	uint8_t searchAddress[8];
-	int8_t searchLastDisrepancy;
+	uint8_t searchLastDisrepancy;
 	uint8_t searchExhausted;
 #endif
 	
