@@ -1,6 +1,6 @@
 /*
   DS2482 library for Arduino
-  Copyright (C) 2009 Paeae Technologies
+  Copyright (C) 2009-2010 Paeae Technologies
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by

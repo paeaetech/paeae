@@ -1,6 +1,6 @@
 /*
   DS2482 library for Arduino
-  Copyright (C) 2009 Paeae Technologies
+  Copyright (C) 2009-2010 Paeae Technologies
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 
 	crc code is from OneWire library
 	
+	-Updates:
+		* fixed wireReadByte busyWait (thanks Mike Jackson)
 */
 #include "WConstants.h"
 
@@ -189,7 +191,6 @@ uint8_t DS2482::wireReadByte()
 	end();
 	busyWait();
 	setReadPtr(PTR_READ);
-	busyWait();
 	return readByte();
 }
 
