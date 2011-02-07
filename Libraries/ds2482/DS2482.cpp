@@ -19,6 +19,8 @@
 	
 	-Updates:
 		* fixed wireReadByte busyWait (thanks Mike Jackson)
+		* Modified search function (thanks Gary Fariss)
+		
 */
 #include "WConstants.h"
 
@@ -248,10 +250,10 @@ uint8_t DS2482::wireSearch(uint8_t *newAddr)
 	busyWait(true);
 	wireWriteByte(0xf0);
 	
-	for(i=0;i<64;i++) 
+	for(i=0;i<65;i++) 
 	{
-		int romByte = i/8;
-		int romBit = 1<<(i&7);
+		int romByte = (i-1)>>3;
+		int romBit = 1<<((i-1)&7);
 		
 		if (i < searchLastDisrepancy)
 			direction = searchAddress[romByte] & romBit;
