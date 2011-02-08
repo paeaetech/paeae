@@ -250,7 +250,7 @@ uint8_t DS2482::wireSearch(uint8_t *newAddr)
 	busyWait(true);
 	wireWriteByte(0xf0);
 	
-	for(i=0;i<65;i++) 
+	for(i=1;i<65;i++) 
 	{
 		int romByte = (i-1)>>3;
 		int romBit = 1<<((i-1)&7);
