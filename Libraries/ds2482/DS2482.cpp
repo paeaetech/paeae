@@ -53,15 +53,15 @@ void DS2482::end()
 void DS2482::setReadPtr(uint8_t readPtr)
 {
 	begin();
-	Wire.write(0xe1);  // changed from 'send' to 'write' according http://blog.makezine.com/2011/12/01/arduino-1-0-is-out-heres-what-you-need-to-know/' KoBraSoft
-	Wire.write(readPtr);     // changed from 'send' to 'write' KoBraSoft 
+	Wire.write(0xe1);  // changed from 'send' to 'write' according http://blog.makezine.com/2011/12/01/arduino-1-0-is-out-heres-what-you-need-to-know/'
+	Wire.write(readPtr);     
 	end();
 }
 
 uint8_t DS2482::readByte()
 {
 	Wire.requestFrom(mAddress,(uint8_t)1);
-	return Wire.read();  // changed from 'receive' to 'read' KoBraSoft 
+	return Wire.read();  
 }
 
 uint8_t DS2482::wireReadStatus(bool setPtr)
@@ -93,7 +93,7 @@ void DS2482::reset()
 {
 	mTimeout = 0;
 	begin();
-	Wire.write(0xf0);  // changed from 'send' to 'write' KoBraSoft
+	Wire.write(0xf0); 
 	end();
 }
 
@@ -101,9 +101,8 @@ bool DS2482::configure(uint8_t config)
 {
 	busyWait(true);
 	begin();
-	Wire.write(0xd2);    // changed from 'send' to 'write' KoBraSoft
-	Wire.write(config | (~config)<<4);   // changed from 'send' to 'write' KoBraSoft 
-	end();
+	Wire.write(0xd2);    
+	Wire.write(config | (~config)<<4);   
 
 	return readByte() == config;
 }
@@ -151,8 +150,8 @@ bool DS2482::selectChannel(uint8_t channel)
 
 	busyWait(true);
 	begin();
-	Wire.write(0xc3);  // changed from 'send' to 'write' KoBraSoft
-	Wire.write(ch); // changed from 'send' to 'write' KoBraSoft 
+	Wire.write(0xc3);  
+	Wire.write(ch); 
 	end();
 	busyWait();
 	
@@ -167,7 +166,7 @@ bool DS2482::wireReset()
 {
 	busyWait(true);
 	begin();
-	Wire.write(0xb4);  // changed from 'send' to 'write' KoBraSoft
+	Wire.write(0xb4); 
 	end();
 	
 	uint8_t status = busyWait();
@@ -180,8 +179,8 @@ void DS2482::wireWriteByte(uint8_t b)
 {
 	busyWait(true);
 	begin();
-	Wire.write(0xa5);  // changed from 'send' to 'write' KoBraSoft
-	Wire.write(b); // changed from 'send' to 'write' KoBraSoft 
+	Wire.write(0xa5);  
+	Wire.write(b); 
 	end();
 }
 
@@ -189,7 +188,7 @@ uint8_t DS2482::wireReadByte()
 {
 	busyWait(true);
 	begin();
-	Wire.write(0x96);  // changed from 'send' to 'write' KoBraSoft
+	Wire.write(0x96);  
 	end();
 	busyWait();
 	setReadPtr(PTR_READ);
@@ -200,8 +199,8 @@ void DS2482::wireWriteBit(uint8_t bit)
 {
 	busyWait(true);
 	begin();
-	Wire.write(0x87);  // changed from 'send' to 'write' KoBraSoft
-	Wire.write(bit ? 0x80 : 0); // changed from 'send' to 'write' KoBraSoft 
+	Wire.write(0x87); 
+	Wire.write(bit ? 0x80 : 0);
 	end();
 }
 
@@ -262,8 +261,8 @@ uint8_t DS2482::wireSearch(uint8_t *newAddr)
 		
 		busyWait();
 		begin();
-		Wire.write(0x78);  // changed from 'send' to 'write' KoBraSoft
-		Wire.write(direction ? 0x80 : 0); // changed from 'send' to 'write' KoBraSoft 
+		Wire.write(0x78); 
+		Wire.write(direction ? 0x80 : 0);
 		end();
 		uint8_t status = busyWait();
 		
