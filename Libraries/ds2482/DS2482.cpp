@@ -12,7 +12,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
+  You should have readd a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	crc code is from OneWire library
@@ -22,7 +22,7 @@
 		* Modified search function (thanks Gary Fariss)
 		
 */
-#include "WConstants.h"
+#include "Arduino.h"  // according http://blog.makezine.com/2011/12/01/arduino-1-0-is-out-heres-what-you-need-to-know/
 
 #include "DS2482.h"
 #include "Wire.h"
@@ -53,15 +53,15 @@ void DS2482::end()
 void DS2482::setReadPtr(uint8_t readPtr)
 {
 	begin();
-	Wire.send(0xe1);
-	Wire.send(readPtr);
+	Wire.write(0xe1);  // changed from 'send' to 'write' according http://blog.makezine.com/2011/12/01/arduino-1-0-is-out-heres-what-you-need-to-know/'
+	Wire.write(readPtr);     
 	end();
 }
 
 uint8_t DS2482::readByte()
 {
 	Wire.requestFrom(mAddress,(uint8_t)1);
-	return Wire.receive();
+	return Wire.read();  
 }
 
 uint8_t DS2482::wireReadStatus(bool setPtr)
@@ -93,7 +93,7 @@ void DS2482::reset()
 {
 	mTimeout = 0;
 	begin();
-	Wire.send(0xf0);
+	Wire.write(0xf0); 
 	end();
 }
 
@@ -101,9 +101,8 @@ bool DS2482::configure(uint8_t config)
 {
 	busyWait(true);
 	begin();
-	Wire.send(0xd2);
-	Wire.send(config | (~config)<<4);
-	end();
+	Wire.write(0xd2);    
+	Wire.write(config | (~config)<<4);   
 
 	return readByte() == config;
 }
@@ -151,8 +150,8 @@ bool DS2482::selectChannel(uint8_t channel)
 
 	busyWait(true);
 	begin();
-	Wire.send(0xc3);
-	Wire.send(ch);
+	Wire.write(0xc3);  
+	Wire.write(ch); 
 	end();
 	busyWait();
 	
@@ -167,7 +166,7 @@ bool DS2482::wireReset()
 {
 	busyWait(true);
 	begin();
-	Wire.send(0xb4);
+	Wire.write(0xb4); 
 	end();
 	
 	uint8_t status = busyWait();
@@ -180,8 +179,8 @@ void DS2482::wireWriteByte(uint8_t b)
 {
 	busyWait(true);
 	begin();
-	Wire.send(0xa5);
-	Wire.send(b);
+	Wire.write(0xa5);  
+	Wire.write(b); 
 	end();
 }
 
@@ -189,7 +188,7 @@ uint8_t DS2482::wireReadByte()
 {
 	busyWait(true);
 	begin();
-	Wire.send(0x96);
+	Wire.write(0x96);  
 	end();
 	busyWait();
 	setReadPtr(PTR_READ);
@@ -200,8 +199,8 @@ void DS2482::wireWriteBit(uint8_t bit)
 {
 	busyWait(true);
 	begin();
-	Wire.send(0x87);
-	Wire.send(bit ? 0x80 : 0);
+	Wire.write(0x87); 
+	Wire.write(bit ? 0x80 : 0);
 	end();
 }
 
@@ -262,8 +261,8 @@ uint8_t DS2482::wireSearch(uint8_t *newAddr)
 		
 		busyWait();
 		begin();
-		Wire.send(0x78);
-		Wire.send(direction ? 0x80 : 0);
+		Wire.write(0x78); 
+		Wire.write(direction ? 0x80 : 0);
 		end();
 		uint8_t status = busyWait();
 		
