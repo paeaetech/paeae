@@ -32,11 +32,16 @@
 #define PTR_READ 0xe1
 #define PTR_CONFIG 0xc3
 
+#ifdef ONEWIRE_CRC
+static uint16_t crc_table[256];
+#endif
 
 DS2482::DS2482(uint8_t addr)
 {
 	mAddress = 0x18 | addr;
-
+#ifdef ONEWIRE_CRC
+	initCrc16();
+#endif
 }
 
 //-------helpers
@@ -235,7 +240,7 @@ void DS2482::wireResetSearch()
 		searchAddress[i] = 0;
 }
 
-uint8_t DS2482::wireSearch(uint8_t *newAddr)
+uint8_t DS2482::wireSearch(uint8_t *newAddr, uint8_t cmd)
 {
 	uint8_t i;
 	uint8_t direction;
@@ -248,7 +253,7 @@ uint8_t DS2482::wireSearch(uint8_t *newAddr)
 		return 0;
 
 	busyWait(true);
-	wireWriteByte(0xf0);
+	wireWriteByte(cmd);
 
 	for(i=1;i<65;i++)
 	{
@@ -317,6 +322,40 @@ uint8_t DS2482::crc8( uint8_t *addr, uint8_t len)
 				crc ^= 0x8C;
 
 			inbyte >>= 1;
+		}
+	}
+	return crc;
+}
+
+void DS2482::initCrc16()
+{
+	uint16_t crc;
+	uint16_t c;
+	for (uint16_t i=0; i<256; i++)
+	{
+		crc = 0;
+		c   = i;
+		for (uint16_t j=0; j<8; j++)
+		{
+			if ((crc ^ c) & 0x0001)
+				crc = (crc >> 1) ^ 0xA001;
+			else
+				crc = crc >> 1;
+			c = c >> 1;
+		}
+		crc_table[i] = crc;
+	}
+}
+
+uint16_t DS2482::crc16( const uint8_t *buf, uint8_t len)
+{
+	uint16_t crc = 0;
+	const uint8_t *p = buf;
+	if (p != NULL)
+	{
+		for (uint8_t i=0; i<len; i++)
+		{
+			crc = (crc >> 8) ^ crc_table[ (crc ^ (uint16_t) *p++) & 0x00FF ];
 		}
 	}
 	return crc;
