@@ -82,12 +82,18 @@ public:
     // might be a good idea to check the CRC to make sure you didn't
     // get garbage.  The order is deterministic. You will always get
     // the same devices in the same order.
-    uint8_t wireSearch(uint8_t *newAddr);
+    // The parameter 'cmd' can be used for devices supporting Conditional
+    // Search 0xEC (e.g. DS2408)
+	uint8_t wireSearch(uint8_t *newAddr, uint8_t cmd = 0xf0);
 #endif
 #if ONEWIRE_CRC
     // Compute a Dallas Semiconductor 8 bit CRC, these are used in the
     // ROM and scratchpad registers.
     static uint8_t crc8( uint8_t *addr, uint8_t len);
+
+	// Compute a Dallas Semiconductor 16 bit CRC, these are used in the
+	// scratchpad registers of some devices (e.g. DS2408).
+	static uint16_t crc16( const uint8_t *data, uint8_t len);
 #endif
 
 private:
@@ -100,6 +106,11 @@ private:
 	uint8_t busyWait(bool setReadPtr=false); //blocks until
 	void begin();
 	void end();
+
+#if ONEWIRE_CRC
+	// Initializes the CRC16-table.
+	static void initCrc16();
+#endif
 	
 #if ONEWIRE_SEARCH
 	uint8_t searchAddress[8];
